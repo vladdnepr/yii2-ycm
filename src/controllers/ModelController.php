@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm\controllers;
+namespace vladdnepr\ycm\controllers;
 
 use kartik\grid\GridView;
 use Yii;
@@ -72,7 +72,7 @@ class ModelController extends Controller
      */
     public function actionRedactorUpload($name, $attr, $type = 'image')
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         $name = (string) $name;
         $attribute = (string) $attr;
@@ -125,7 +125,7 @@ class ModelController extends Controller
      */
     public function actionRedactorList($name, $attr, $type = 'image')
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         $name = (string) $name;
         $attribute = (string) $attr;
@@ -155,7 +155,7 @@ class ModelController extends Controller
      */
     public function actionList($name)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name);
@@ -186,7 +186,7 @@ class ModelController extends Controller
                     ]);
                 },
                 'delete' => function ($url, $model, $key) {
-                    /** @var $module \janisto\ycm\Module */
+                    /** @var $module \vladdnepr\ycm\Module */
                     $module = $this->module;
                     if ($module->getHideDelete($model) === false) {
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
@@ -256,7 +256,7 @@ class ModelController extends Controller
     {
         $buttons = [];
 
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
 
         if ($module->getHideCreate($model) === false) {
@@ -286,7 +286,7 @@ class ModelController extends Controller
      */
     public function actionCreate($name)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name);
@@ -357,7 +357,7 @@ class ModelController extends Controller
      */
     public function actionUpdate($name, $pk)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name, $pk);
@@ -440,7 +440,7 @@ class ModelController extends Controller
      */
     public function actionDelete($name, $pk)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name, $pk);

@@ -9,7 +9,7 @@ use yii\widgets\Breadcrumbs;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-/** @var $module \janisto\ycm\Module */
+/** @var $module \vladdnepr\ycm\Module */
 $module = Yii::$app->controller->module;
 
 $assetBundle = $module->assetBundle;

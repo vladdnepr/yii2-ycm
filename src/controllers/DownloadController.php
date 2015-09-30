@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm\controllers;
+namespace vladdnepr\ycm\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
@@ -44,7 +44,7 @@ class DownloadController extends Controller
      */
     public function actionCsv($name)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name);
@@ -110,7 +110,7 @@ class DownloadController extends Controller
      */
     public function actionMscsv($name)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name);
@@ -177,7 +177,7 @@ class DownloadController extends Controller
      */
     public function actionExcel($name)
     {
-        /** @var $module \janisto\ycm\Module */
+        /** @var $module \vladdnepr\ycm\Module */
         $module = $this->module;
         /** @var $model \yii\db\ActiveRecord */
         $model = $module->loadModel($name);

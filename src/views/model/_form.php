@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use janisto\ycm\widgets\Alert;
+use vladdnepr\ycm\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $model \yii\db\ActiveRecord */
 /* @var $name string */
 /* @var $form \yii\widgets\ActiveForm */
 
-/** @var $module \janisto\ycm\Module */
+/** @var $module \vladdnepr\ycm\Module */
 $module = Yii::$app->controller->module;
 
 $tableSchema = $model->getTableSchema();

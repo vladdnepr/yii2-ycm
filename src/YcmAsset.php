@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm;
+namespace vladdnepr\ycm;
 
 use yii\web\AssetBundle;
 

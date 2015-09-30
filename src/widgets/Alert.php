@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm\widgets;
+namespace vladdnepr\ycm\widgets;
 
 use Yii;
 use yii\bootstrap\Widget;

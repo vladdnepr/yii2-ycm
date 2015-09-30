@@ -5,7 +5,7 @@ use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 
-/** @var $module \janisto\ycm\Module */
+/** @var $module \vladdnepr\ycm\Module */
 $module = Yii::$app->controller->module;
 
 $this->title = Yii::t('ycm', 'Content');

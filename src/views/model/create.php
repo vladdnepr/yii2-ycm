@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model \yii\db\ActiveRecord */
 /* @var $name string */
 
-/** @var $module \janisto\ycm\Module */
+/** @var $module \vladdnepr\ycm\Module */
 $module = Yii::$app->controller->module;
 
 $this->title = Yii::t('ycm', 'Create {name}', ['name' => $module->getSingularName($name)]);

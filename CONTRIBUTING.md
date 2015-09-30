@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/janisto/yii2-ycm).
+We accept contributions via Pull Requests on [Github](https://github.com/vladdnepr/yii2-ycm).
 
 
 ## Pull Requests

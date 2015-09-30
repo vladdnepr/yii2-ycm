@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm\behaviors;
+namespace vladdnepr\ycm\behaviors;
 
 use Yii;
 use yii\base\Behavior;

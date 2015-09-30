@@ -2,14 +2,14 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use janisto\ycm\widgets\Alert;
+use vladdnepr\ycm\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $config array */
 /* @var $model \yii\db\ActiveRecord */
 /* @var $name string */
 
-/** @var $module \janisto\ycm\Module */
+/** @var $module \vladdnepr\ycm\Module */
 $module = Yii::$app->controller->module;
 
 $this->title = $module->getAdminName($model);

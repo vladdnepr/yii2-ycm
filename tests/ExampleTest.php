@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm\tests;
+namespace vladdnepr\ycm\tests;
 
 class ExampleTest extends \PHPUnit_Framework_TestCase
 {

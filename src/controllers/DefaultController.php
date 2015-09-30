@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm\controllers;
+namespace vladdnepr\ycm\controllers;
 
 use Yii;
 use yii\filters\AccessControl;

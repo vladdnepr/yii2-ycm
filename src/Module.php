@@ -1,6 +1,6 @@
 <?php
 
-namespace janisto\ycm;
+namespace vladdnepr\ycm;
 
 use Yii;
 use janisto\timepicker\TimePicker;
@@ -25,7 +25,7 @@ use yii\web\NotFoundHttpException;
  * 'modules' => [
  *     ...
  *     'ycm' => [
- *         'class' => 'janisto\ycm\Module',
+ *         'class' => 'vladdnepr\ycm\Module',
  *         'admins' => ['admin'],
  *         'urlPrefix' => 'xxx',
  *         'registerModels' => [
@@ -43,18 +43,18 @@ use yii\web\NotFoundHttpException;
  *
  * @author Jani Mikkonen <janisto@php.net>
  * @license public domain (http://unlicense.org)
- * @link https://github.com/janisto/yii2-ycm
+ * @link https://github.com/vladdnepr/yii2-ycm
  */
 class Module extends \yii\base\Module
 {
     /** @inheritdoc */
-    public $controllerNamespace = 'janisto\ycm\controllers';
+    public $controllerNamespace = 'vladdnepr\ycm\controllers';
 
     /** @var array An array of administrator usernames. */
     public $admins = [];
 
     /** @var string Asset bundle. */
-    public $assetBundle = 'janisto\ycm\YcmAsset';
+    public $assetBundle = 'vladdnepr\ycm\YcmAsset';
 
     /** @var string URL prefix. */
     public $urlPrefix = 'admin';
