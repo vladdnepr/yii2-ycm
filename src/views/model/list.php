@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use janisto\ycm\widgets\Alert;
 
 /* @var $this \yii\web\View */
@@ -23,14 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= Alert::widget() ?>
-
-    <p>
-        <?php
-        if ($module->getHideCreate($model) === false) {
-            echo Html::a(Yii::t('ycm', 'Create {name}', ['name' => $module->getSingularName($name)]), ['create', 'name' => $name], ['class' => 'btn btn-success']);
-        }
-        ?>
-    </p>
 
     <?= GridView::widget($config); ?>
 

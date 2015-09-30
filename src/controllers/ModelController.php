@@ -2,6 +2,7 @@
 
 namespace janisto\ycm\controllers;
 
+use kartik\grid\GridView;
 use Yii;
 use vova07\imperavi\helpers\FileHelper as RedactorFileHelper;
 use yii\base\DynamicModel;
@@ -173,9 +174,9 @@ class ModelController extends Controller
                 }
             }
         }
-        //array_unshift($columns, ['class' => 'yii\grid\SerialColumn']);
+        //array_unshift($columns, ['class' => 'kartik\grid\SerialColumn']);
         array_push($columns, [
-            'class' => 'yii\grid\ActionColumn',
+            'class' => 'kartik\grid\ActionColumn',
             'template' => '{update} {delete}',
             'buttons' => [
                 'update' => function ($url, $model, $key) {
@@ -203,18 +204,30 @@ class ModelController extends Controller
             }
         ]);
 
+        $config = [
+            'pjax' => true,
+            'panel' => [
+                'type' => GridView::TYPE_DEFAULT
+            ],
+            'toolbar'=> $this->getListToolbar($name, $model),
+            'columns' => $columns,
+            'showOnEmpty' => false,
+        ];
+
+        if (method_exists($model, 'gridViewConfig')) {
+            $config = array_merge($config, $model->gridViewConfig());
+        }
+
         if (method_exists($model, 'search')) {
             $scenarios = $model->scenarios();
             if (isset($scenarios['ycm-search'])) {
                 $model->setScenario('ycm-search');
             }
             $dataProvider = $model->search(Yii::$app->request->queryParams);
-            $config = [
+            $config = array_merge($config, [
                 'dataProvider' => $dataProvider,
                 'filterModel' => $model,
-                'columns' => $columns,
-                'showOnEmpty' => false,
-            ];
+            ]);
         } else {
             $sort = [];
             if (method_exists($model, 'gridViewSort')) {
@@ -227,11 +240,9 @@ class ModelController extends Controller
                     'pageSize' => 20,
                 ],
             ]);
-            $config = [
+            $config = array_merge($config, [
                 'dataProvider' => $dataProvider,
-                'columns' => $columns,
-                'showOnEmpty' => false,
-            ];
+            ]);
         }
 
         return $this->render('list', [
@@ -239,6 +250,29 @@ class ModelController extends Controller
             'model' => $model,
             'name' => $name,
         ]);
+    }
+
+    protected function getListToolbar($name, $model)
+    {
+        $buttons = [];
+
+        /** @var $module \janisto\ycm\Module */
+        $module = $this->module;
+
+        if ($module->getHideCreate($model) === false) {
+            $buttons[] = Html::a(
+                '<i class="glyphicon glyphicon-plus"></i> ' .
+                Yii::t('ycm', 'Create {name}', ['name' => $module->getSingularName($name)]),
+                ['create', 'name' => $name],
+                ['class' => 'btn btn-success']
+            );
+        }
+
+        return [
+            ['content' => implode(' ', $buttons)],
+            '{export}',
+            '{toggleData}',
+        ];
     }
 
     /**
