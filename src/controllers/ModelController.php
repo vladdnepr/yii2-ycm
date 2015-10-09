@@ -4,6 +4,7 @@ namespace vladdnepr\ycm\controllers;
 
 use kartik\grid\GridView;
 use vladdnepr\ycm\Module;
+use vladdnepr\ycm\query\SearchQuery;
 use vladdnepr\ycm\utils\helpers\ModelHelper;
 use Yii;
 use vova07\imperavi\helpers\FileHelper as RedactorFileHelper;
@@ -224,6 +225,10 @@ class ModelController extends Controller
             'toolbar'=> $this->getListToolbar($name, $model),
             'columns' => $columns,
             'showOnEmpty' => false,
+            'dataProvider' => SearchQuery::getDataProvider(
+                $model,
+                Yii::$app->request->queryParams
+            )
         ];
 
         if (method_exists($model, 'gridViewConfig')) {
@@ -231,29 +236,8 @@ class ModelController extends Controller
         }
 
         if (method_exists($model, 'search')) {
-            $scenarios = $model->scenarios();
-            if (isset($scenarios['ycm-search'])) {
-                $model->setScenario('ycm-search');
-            }
-            $dataProvider = $model->search(Yii::$app->request->queryParams);
             $config = array_merge($config, [
-                'dataProvider' => $dataProvider,
                 'filterModel' => $model,
-            ]);
-        } else {
-            $sort = [];
-            if (method_exists($model, 'gridViewSort')) {
-                $sort = $model->gridViewSort();
-            }
-            $dataProvider = new ActiveDataProvider([
-                'query' => $model->find(),
-                'sort' => $sort,
-                'pagination' => [
-                    'pageSize' => 20,
-                ],
-            ]);
-            $config = array_merge($config, [
-                'dataProvider' => $dataProvider,
             ]);
         }
 

@@ -3,6 +3,7 @@
 namespace vladdnepr\ycm\query;
 
 use vladdnepr\ycm\utils\helpers\ModelHelper;
+use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -19,6 +20,66 @@ class SearchQuery
      * @var ActiveRecord
      */
     protected $model;
+
+    public static function getDataProvider(ActiveRecord $model, $attributes)
+    {
+        $sort = [];
+
+        if (method_exists($model, 'gridViewSort')) {
+            $sort = $model->gridViewSort();
+        }
+
+        $search = new static($model);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $search->getQuery(),
+            'sort' => $sort,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        if (method_exists($model, 'search')) {
+            $scenarios = $model->scenarios();
+            if (isset($scenarios['ycm-search'])) {
+                $model->setScenario('ycm-search');
+            }
+
+            $modelSearch = $model->search($attributes);
+
+            if ($modelSearch instanceof ActiveDataProvider) {
+                $dataProvider = $modelSearch;
+            } elseif (is_array($modelSearch)) {
+                // Load data to model
+                $model->load($attributes);
+
+                if ($model->validate()) {
+                    // Iterate config
+                    foreach ($modelSearch as $search_condition) {
+                        // Check attribute name and search type exists
+                        if (!isset($search_condition[0]) || !isset($search_condition[1])) {
+                            throw new \Exception(
+                                'Search row must contain in 0 offset attribute name, in 1 offset - search type'
+                            );
+                        }
+
+                        // Check used type implemented
+                        if (!method_exists($search, $search_condition[1])) {
+                            throw new \Exception('Search type' . $search_condition[1] . ' not implemented');
+                        }
+
+                        $search->{$search_condition[1]}($search_condition[0]);
+                    }
+                }
+            } else {
+                throw new \BadMethodCallException(
+                    'Search method must be return instance of ActiveDataProvider or config array'
+                );
+            }
+        }
+
+        return $dataProvider;
+    }
 
     public function __construct(ActiveRecord $model)
     {
