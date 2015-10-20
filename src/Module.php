@@ -2,12 +2,15 @@
 
 namespace vladdnepr\ycm;
 
+use kartik\widgets\Select2;
+use vladdnepr\ycm\utils\helpers\ModelHelper;
 use Yii;
 use janisto\timepicker\TimePicker;
 use vova07\imperavi\Widget as RedactorWidget;
-use vova07\select2\Widget as Select2Widget;
+use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Modal;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
@@ -159,6 +162,7 @@ class Module extends \yii\base\Module
             }
             $model = Yii::createObject($class);
             if (is_subclass_of($model, 'yii\db\ActiveRecord')) {
+                $this->attachBehaviorsToModel($model);
                 $this->models[$name] = $model;
                 $this->modelPaths[$name] = $this->uploadPath . DIRECTORY_SEPARATOR . $folder;
                 $this->modelUrls[$name] = $this->uploadUrl . '/' . $folder;
@@ -219,6 +223,7 @@ class Module extends \yii\base\Module
         if ($pk !== null) {
             if (($model = $model->findOne((int) $pk)) !== null) {
                 /** @var $model \yii\db\ActiveRecord */
+                $this->attachBehaviorsToModel($model);
                 return $model;
             } else {
                 throw new NotFoundHttpException('The requested page does not exist.');
@@ -324,13 +329,18 @@ class Module extends \yii\base\Module
             case 'select':
                 $options = [
                     'options' => [
-                        'placeholder' => Yii::t('ycm', 'Choose {name}', ['name' => $model->getAttributeLabel($attribute)]),
+                        'placeholder' => Yii::t(
+                            'ycm',
+                            'Choose {name}',
+                            ['name' => $model->getAttributeLabel($attribute)]
+                        ),
+                        'width' => '100%',
                     ],
-                    'settings' => [
+                    'pluginOptions' => [
                         'allowClear' => true,
                         'width' => '100%',
                     ],
-                    'items' => [
+                    'data' => [
                         '' => '', // Add empty item for placeholder
                     ],
                 ];
@@ -342,8 +352,6 @@ class Module extends \yii\base\Module
                     'options' => [
                         'multiple' => true,
                         'placeholder' => Yii::t('ycm', 'Choose {name}', ['name' => $model->getAttributeLabel($attribute)]),
-                    ],
-                    'settings' => [
                         'width' => '100%',
                     ],
                 ];
@@ -461,11 +469,56 @@ class Module extends \yii\base\Module
             case 'hide':
                 break;
 
+            // Special type - model relation
+            case 'relation':
+                $relation = $model->getRelation($attribute);
+
+                $options = [
+                    'widgetClass' => Select2::className(),
+                    'data' => ModelHelper::getSelectChoices(new $relation->modelClass),
+                    'hideSearch' => false,
+                    'options' => [
+                        'multiple' => $relation->multiple,
+                        'placeholder' => 'Select...'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ]
+                ];
+
+                echo $this->createField($form, $model, $attribute, $options, 'widget');
+                break;
+
+            // Special type - field with enum values from DB
+            case 'enumerate':
+                $options = [
+                    'widgetClass' => Select2::className(),
+                    'data' => ModelHelper::getEnumChoices($model, $attribute),
+                    'options' => [
+                        'placeholder' => 'Select...',
+                    ]
+                ];
+
+                echo $this->createField($form, $model, $attribute, $options, 'widget');
+                break;
+
             default:
                 $options = $this->getAttributeOptions($attribute);
                 echo $form->field($model, $attribute)->$widget($options);
                 break;
         }
+    }
+
+    protected function attachBehaviorsToModel(ActiveRecord $model)
+    {
+        $model->attachBehavior(
+            'datetimepicker',
+            \vladdnepr\ycm\utils\behavior\DatePickerBehavior::className()
+        );
+        $model->attachBehavior(
+            'relationsseter',
+            \vladdnepr\ycm\utils\behavior\RelationsSetterBehavior::className()
+        );
     }
 
     /**
@@ -510,12 +563,12 @@ class Module extends \yii\base\Module
                 $items = $this->getAttributeChoices($model, $attribute);
                 $field->$type($items, $options);
             } elseif ($type == 'select') {
-                if (isset($options['items'])) {
-                    $options['items'] = $options['items'] + $this->getAttributeChoices($model, $attribute);;
+                if (isset($options['data'])) {
+                    $options['data'] = $options['data'] + $this->getAttributeChoices($model, $attribute);
                 } else {
-                    $options['items'] = $this->getAttributeChoices($model, $attribute);
+                    $options['data'] = $this->getAttributeChoices($model, $attribute);
                 }
-                $field->widget(Select2Widget::className(), $options);
+                $field->widget(Select2::className(), $options);
             } elseif ($type == 'widget') {
                 if (isset($options['widgetClass'])) {
                     $class = $options['widgetClass'];
