@@ -25,11 +25,12 @@
         "yiisoft/yii2-bootstrap": "*",
         "janisto/yii2-timepicker": "*",
         "vova07/yii2-imperavi-widget": "*",
-        "vova07/yii2-select2-widget": "*",
         "kartik-v/yii2-grid": "~3.0",
         "kartik-v/yii2-krajee-base": "~1.7",
         "kartik-v/yii2-mpdf": "~1.0",
-        "vladdnepr/yii2-ycm-utils": "*"
+        "kartik-v/yii2-editable": "^1.7",
+        "kartik-v/yii2-widgets": "^3.4",
+        "kartik-v/yii2-field-range": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5",

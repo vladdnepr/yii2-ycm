@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bec1fc305f742aec906d1ccfabd6124",
+    "hash": "88192642338ede72e7ae24f270b81d12",
+    "content-hash": "7c9d7bb5b54faab33baab5703dec27dd",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -227,34 +228,6 @@
             }
         },
         {
-            "name": "bower-asset/select2",
-            "version": "3.5.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/select2/select2.git",
-                "reference": "95a977f674b6938af55ec5f28b7772df93786c5c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/select2/select2/zipball/95a977f674b6938af55ec5f28b7772df93786c5c",
-                "reference": "95a977f674b6938af55ec5f28b7772df93786c5c",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/jquery": ">=1.7.1"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "select2.js",
-                    "select2.css",
-                    "select2.png",
-                    "select2x2.png",
-                    "select2-spinner.gif"
-                ]
-            }
-        },
-        {
             "name": "bower-asset/yii2-pjax",
             "version": "v2.0.4",
             "source": {
@@ -448,67 +421,6 @@
                 "yii2"
             ],
             "time": "2015-06-26 08:39:12"
-        },
-        {
-            "name": "janisto/yii2-ycm",
-            "version": "0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/janisto/yii2-ycm.git",
-                "reference": "39fb5ca2898d5de0134451d1c08ee84404b74e8a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/janisto/yii2-ycm/zipball/39fb5ca2898d5de0134451d1c08ee84404b74e8a",
-                "reference": "39fb5ca2898d5de0134451d1c08ee84404b74e8a",
-                "shasum": ""
-            },
-            "require": {
-                "janisto/yii2-timepicker": "*",
-                "php": ">=5.4.0",
-                "vova07/yii2-imperavi-widget": "*",
-                "vova07/yii2-select2-widget": "*",
-                "yiisoft/yii2": "*",
-                "yiisoft/yii2-bootstrap": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.5",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "bootstrap": "janisto\\ycm\\Bootstrap",
-                "asset-installer-paths": {
-                    "npm-asset-library": "vendor/npm",
-                    "bower-asset-library": "vendor/bower"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "janisto\\ycm\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "public domain"
-            ],
-            "authors": [
-                {
-                    "name": "Jani Mikkonen",
-                    "email": "janisto@php.net"
-                }
-            ],
-            "description": "YCM - Yii 2 Content Management module",
-            "homepage": "https://github.com/janisto/yii2-ycm",
-            "keywords": [
-                "admin",
-                "administration",
-                "extension",
-                "module",
-                "yii2",
-                "yii2-ycm"
-            ],
-            "time": "2015-09-08 11:14:45"
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
@@ -1958,119 +1870,6 @@
             "time": "2014-11-09 19:54:17"
         },
         {
-            "name": "vladdnepr/trait-utils",
-            "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vladdnepr/trait-utils.git",
-                "reference": "d3ce0013a111f914306599e10b4af9e4ce937617"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vladdnepr/trait-utils/zipball/d3ce0013a111f914306599e10b4af9e4ce937617",
-                "reference": "d3ce0013a111f914306599e10b4af9e4ce937617",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "VladDnepr\\TraitUtils\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "public domain"
-            ],
-            "authors": [
-                {
-                    "name": "Vladislav Lyshenko",
-                    "email": "vladdnepr1989@gmail.com"
-                }
-            ],
-            "description": "PHP Trait Utilities",
-            "homepage": "https://github.com/vladdnepr/trait-utils",
-            "keywords": [
-                "contain",
-                "instanceof",
-                "php",
-                "trait",
-                "utilities",
-                "utils"
-            ],
-            "time": "2015-09-15 14:26:06"
-        },
-        {
-            "name": "vladdnepr/yii2-ycm-utils",
-            "version": "0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/vladdnepr/yii2-ycm-utils.git",
-                "reference": "a939319294f2e3188b3d11fd6bc87c0758d82cad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vladdnepr/yii2-ycm-utils/zipball/a939319294f2e3188b3d11fd6bc87c0758d82cad",
-                "reference": "a939319294f2e3188b3d11fd6bc87c0758d82cad",
-                "shasum": ""
-            },
-            "require": {
-                "janisto/yii2-timepicker": "*",
-                "janisto/yii2-ycm": "*",
-                "kartik-v/yii2-editable": "^1.7",
-                "kartik-v/yii2-field-range": "^1.3",
-                "kartik-v/yii2-grid": "~3.0",
-                "kartik-v/yii2-krajee-base": "~1.7",
-                "kartik-v/yii2-mpdf": "~1.0",
-                "kartik-v/yii2-widgets": "^3.4",
-                "php": ">=5.4.0",
-                "vladdnepr/trait-utils": "*",
-                "yiisoft/yii2": "*",
-                "yiisoft/yii2-bootstrap": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "bootstrap": "vladdnepr\\ycm\\utils\\Bootstrap"
-            },
-            "autoload": {
-                "psr-4": {
-                    "vladdnepr\\ycm\\utils\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "public domain"
-            ],
-            "authors": [
-                {
-                    "name": "Vladislav Lyshenko",
-                    "email": "vladdnepr1989@gmail.com"
-                }
-            ],
-            "description": "YCM - Yii 2 Content Management module Utilities",
-            "homepage": "https://github.com/vladdnepr/yii2-ycm-utils",
-            "keywords": [
-                "admin",
-                "administration",
-                "extension",
-                "module",
-                "utilities",
-                "utils",
-                "yii2",
-                "yii2-ycm",
-                "yii2-ycm-utils"
-            ],
-            "time": "2015-09-28 12:55:37"
-        },
-        {
             "name": "vova07/yii2-imperavi-widget",
             "version": "1.2.9",
             "source": {
@@ -2131,68 +1930,6 @@
                 "yii2"
             ],
             "time": "2015-08-21 11:36:17"
-        },
-        {
-            "name": "vova07/yii2-select2-widget",
-            "version": "0.1.2",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:vova07/yii2-select2-widget.git",
-                "reference": "8b1a0907c24caf7471bdb5f6946f04a5920a1176"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/vova07/yii2-select2-widget/zipball/4f7a7702b6b8bf1007f153b3f2fdc10e02af3117",
-                "reference": "8b1a0907c24caf7471bdb5f6946f04a5920a1176",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/select2": "3.*",
-                "yiisoft/yii2": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.0.x-dev"
-                },
-                "asset-installer-paths": {
-                    "bower-asset-library": "vendor/bower"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "vova07\\select2\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Crudu Vasile",
-                    "email": "bazillio07@yandex.ru",
-                    "homepage": "https://github.com/vova07",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The select2 widget for Yii framework.",
-            "homepage": "https://github.com/vova07/yii2-select2-widget",
-            "keywords": [
-                "extension",
-                "select",
-                "select 2",
-                "select2",
-                "widget",
-                "yii",
-                "yii 2",
-                "yii2"
-            ],
-            "time": "2015-04-05 21:07:23"
         },
         {
             "name": "yiisoft/yii2",
@@ -3070,16 +2807,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "ef1ca6835468857944d5c3b48fa503d5554cff2f"
+                "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ef1ca6835468857944d5c3b48fa503d5554cff2f",
-                "reference": "ef1ca6835468857944d5c3b48fa503d5554cff2f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/eabf68b476ac7d0f73793aada060f1c1a9bf8979",
+                "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979",
                 "shasum": ""
             },
             "require": {
@@ -3128,7 +2865,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-09-14 06:51:16"
+            "time": "2015-10-06 15:47:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3310,16 +3047,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.9",
+            "version": "4.8.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "73fad41adb5b7bc3a494bb930d90648df1d5e74b"
+                "reference": "b4900675926860bef091644849305399b986efa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/73fad41adb5b7bc3a494bb930d90648df1d5e74b",
-                "reference": "73fad41adb5b7bc3a494bb930d90648df1d5e74b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b4900675926860bef091644849305399b986efa2",
+                "reference": "b4900675926860bef091644849305399b986efa2",
                 "shasum": ""
             },
             "require": {
@@ -3378,20 +3115,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-09-20 12:56:44"
+            "time": "2015-10-17 15:03:30"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.7",
+            "version": "2.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "5e2645ad49d196e020b85598d7c97e482725786a"
+                "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5e2645ad49d196e020b85598d7c97e482725786a",
-                "reference": "5e2645ad49d196e020b85598d7c97e482725786a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/ac8e7a3db35738d56ee9a76e78a4e03d97628983",
+                "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983",
                 "shasum": ""
             },
             "require": {
@@ -3434,7 +3171,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-08-19 09:14:08"
+            "time": "2015-10-02 06:51:40"
         },
         {
             "name": "scrutinizer/ocular",
@@ -3706,16 +3443,16 @@
         },
         {
             "name": "sebastian/global-state",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/global-state.git",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01"
+                "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
-                "reference": "c7428acdb62ece0a45e6306f1ae85e1c05b09c01",
+                "url": "https://api.github.com/repos/sebastianbergmann/global-state/zipball/bc37d50fea7d017d3d340f230811c9f1d7280af4",
+                "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4",
                 "shasum": ""
             },
             "require": {
@@ -3753,7 +3490,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2014-10-06 09:23:50"
+            "time": "2015-10-12 03:26:01"
         },
         {
             "name": "sebastian/recursion-context",

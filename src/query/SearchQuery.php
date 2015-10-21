@@ -2,7 +2,8 @@
 
 namespace vladdnepr\ycm\query;
 
-use vladdnepr\ycm\utils\helpers\ModelHelper;
+use vladdnepr\ycm\data\SearchDataProvider;
+use vladdnepr\ycm\helpers\ModelHelper;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -31,7 +32,8 @@ class SearchQuery
 
         $search = new static($model);
 
-        $dataProvider = new ActiveDataProvider([
+        $dataProvider = new SearchDataProvider([
+            'module' => \Yii::$app->getModule('ycm'),
             'query' => $search->getQuery(),
             'sort' => $sort,
             'pagination' => [
@@ -125,8 +127,7 @@ class SearchQuery
 
     public function relation($relation_name)
     {
-        /* @var ActiveQuery $relation */
-        $relation = $this->model->getRelation($relation_name);
+        $relation = ModelHelper::getRelation($this->model, $relation_name);
         $relationClass = $relation->modelClass;
         $relationField = $relationClass::tableName() . '.' .
             ($relation->multiple ? array_values($relation->link)[0] : array_keys($relation->link)[0]);

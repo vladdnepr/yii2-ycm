@@ -5,7 +5,7 @@ namespace vladdnepr\ycm\controllers;
 use kartik\grid\GridView;
 use vladdnepr\ycm\Module;
 use vladdnepr\ycm\query\SearchQuery;
-use vladdnepr\ycm\utils\helpers\ModelHelper;
+use vladdnepr\ycm\helpers\ModelHelper;
 use Yii;
 use vova07\imperavi\helpers\FileHelper as RedactorFileHelper;
 use yii\base\DynamicModel;
@@ -175,7 +175,9 @@ class ModelController extends Controller
 
         $columns = [];
         if (method_exists($model, 'gridViewColumns')) {
-            $columns = $model->gridViewColumns();
+            foreach ($model->gridViewColumns() as $options) {
+                $columns[] = $module->createListWidget($model, $options);
+            }
         } else {
             //$columns = $model->getTableSchema()->getColumnNames();
             $i = 0;
@@ -472,17 +474,15 @@ class ModelController extends Controller
 
     public function actionEditable($name)
     {
-        /** @var $model \yii\db\ActiveRecord */
-        $model = $this->module->loadModel($name);
-
         if (!\Yii::$app->request->post('hasEditable')) {
             throw new BadRequestHttpException;
         }
 
+        /** @var $model \yii\db\ActiveRecord */
+        $model = $this->module->loadModel($name, \Yii::$app->request->post('editableKey'));
+
         $output = '';
         $message = '';
-
-        $model = $model->findOne(\Yii::$app->request->post('editableKey'));
 
         $modelShortName = $model->formName();
         $post = \Yii::$app->request->post($modelShortName);

@@ -2,8 +2,11 @@
 
 namespace vladdnepr\ycm;
 
+use kartik\date\DatePicker;
+use kartik\editable\Editable;
+use kartik\grid\EditableColumn;
 use kartik\widgets\Select2;
-use vladdnepr\ycm\utils\helpers\ModelHelper;
+use vladdnepr\ycm\helpers\ModelHelper;
 use Yii;
 use janisto\timepicker\TimePicker;
 use vova07\imperavi\Widget as RedactorWidget;
@@ -509,16 +512,173 @@ class Module extends \yii\base\Module
         }
     }
 
-    protected function attachBehaviorsToModel(ActiveRecord $model)
+    /**
+     * @param ActiveRecord $model
+     * @param $options
+     * @return array
+     */
+    public function createListWidget($model, $options)
+    {
+        if (is_array($options) && isset($options[0]) && isset($options[1])) {
+            $attribute = array_shift($options);
+            $type = array_shift($options);
+
+            $editable = isset($options['editable']) && $options['editable'] == true;
+            $editableType = isset($options['editableType']) ? $options['editableType'] : Editable::INPUT_TEXT;
+            unset($options['editable'], $options['editableType']);
+
+            $config = [
+                'attribute' => $attribute,
+            ];
+
+            switch ($type) {
+                case 'date':
+                    $config = [
+                        'attribute' => $attribute,
+                        'format' => ['datetime', 'php:Y-m-d H:i:s'],
+                        'options' => ['style' => 'width:240px'],
+                        'filterWidgetOptions' => [
+                            'type' => DatePicker::TYPE_RANGE,
+                            'attribute2' => $attribute . '_to',
+                        ],
+                        'filterType' => DatePicker::className()
+                    ];
+                    break;
+                case 'boolean':
+                    $config = [
+                        'class' => \kartik\grid\BooleanColumn::className(),
+                        'attribute' => $attribute,
+                        'trueLabel' => 'Yes',
+                        'falseLabel' => 'No',
+                        'filterWidgetOptions' => [
+                            'data' => [0 => 'No', 1 => 'Yes'],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'placeholder' => 'Select...'
+                            ],
+                        ],
+                        'filterType' => Select2::className()
+                    ];
+                    break;
+                case 'enumerate':
+                    $config = [
+                        'attribute' => $attribute,
+                        'filterWidgetOptions' => [
+                            'data' => ModelHelper::getEnumChoices($model, $attribute),
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'placeholder' => 'Select...'
+                            ],
+                        ],
+                        'filterType' => Select2::className()
+                    ];
+                    break;
+                case 'relation':
+                    $relation = ModelHelper::getRelation($model, $attribute);
+                    $relation_choices = ModelHelper::getSelectChoices(new $relation->modelClass);
+                    $config = [
+                        'label' => ucfirst(
+                            strpos($attribute, '.') !== false ?
+                            substr(
+                                $attribute,
+                                strrpos($attribute, '.') + 1
+                            ) :
+                            $attribute
+                        ),
+                        'attribute' => $attribute,
+                        'value' => function ($model, $key, $index, $widget) use ($attribute) {
+                            return $model ? ModelHelper::getLabelRelationValue($model, $attribute) : null;
+                        },
+                        // @todo multiple relation not implemented
+                        'filter' => !$relation->multiple ? $relation_choices : false,
+                        'filterWidgetOptions' => [
+                            'data' => $relation_choices,
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                                'placeholder' => 'Select...'
+                            ],
+                        ],
+                        'filterType' => Select2::className()
+                    ];
+
+                    if ($editable) {
+                        $config['class'] = EditableColumn::className();
+                        $config['editableOptions'] = [
+                            'inputType' => Editable::INPUT_SELECT2,
+                            'size' => 'lg',
+
+                            'ajaxSettings'=>[
+                                'url'=> Url::to([
+                                    '/ycm/model/editable',
+                                    'name' => $this->getModelName($model)
+                                ]),
+                            ],
+
+                            'options' => [
+                                'options' => [
+                                    'multiple' => $relation->multiple,
+                                ],
+                                'data' => $relation_choices,
+                                'pluginOptions' => count($relation_choices) > 20 ?
+                                    [
+                                        'minimumInputLength' => 3,
+                                        'ajax' => [
+                                            'url' => Url::to([
+                                                '/ycm/model/choices', $this->getModelName(new $relation->modelClass)
+                                            ]),
+                                            'dataType' => 'json',
+                                            'processResults' => new JsExpression(
+                                                'function (results) { return results; }'
+                                            )
+                                        ],
+                                    ] :
+                                    null,
+                            ],
+                            'displayValueConfig' => !$relation->multiple ? $relation_choices : null,
+                        ];
+                        $editable = false;
+                    }
+
+                    break;
+            }
+
+            if ($editable) {
+                $config = [
+                    'attribute' => isset($config['label']) ? $config['label'] : $attribute,
+                    'class' => EditableColumn::className(),
+                    'editableOptions' => [
+                        'inputType' => $editableType,
+                        'ajaxSettings'=>[
+                            'url'=> Url::to([
+                                '/ycm/model/editable',
+                                'name' => $this->getModelName($model)
+                            ]),
+                        ],
+                        'options' => $config
+                    ]
+                ];
+            }
+
+            $options = ArrayHelper::merge(
+                $config,
+                $options
+            );
+        }
+
+        return $options;
+    }
+
+    public function attachBehaviorsToModel(ActiveRecord $model)
     {
         $model->attachBehavior(
             'datetimepicker',
-            \vladdnepr\ycm\utils\behavior\DatePickerBehavior::className()
+            \vladdnepr\ycm\behaviors\DatePickerBehavior::className()
         );
         $model->attachBehavior(
             'relationsseter',
-            \vladdnepr\ycm\utils\behavior\RelationsSetterBehavior::className()
+            \vladdnepr\ycm\behaviors\RelationsBehavior::className()
         );
+        return $model;
     }
 
     /**
