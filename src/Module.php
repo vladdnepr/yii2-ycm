@@ -531,12 +531,28 @@ class Module extends \yii\base\Module
                 'attribute' => $attribute,
             ];
 
+            $choices = [];
+
             switch ($type) {
                 case 'date':
                     $config = [
                         'attribute' => $attribute,
+                        'format' => ['datetime', 'php:Y-m-d'],
+                        'options' => ['style' => 'width:240px'],
+                        'convertFormat' => true,
+                        'filterWidgetOptions' => [
+                            'type' => DatePicker::TYPE_RANGE,
+                            'attribute2' => $attribute . '_to',
+                        ],
+                        'filterType' => DatePicker::className()
+                    ];
+                    break;
+                case 'datetime':
+                    $config = [
+                        'attribute' => $attribute,
                         'format' => ['datetime', 'php:Y-m-d H:i:s'],
                         'options' => ['style' => 'width:240px'],
+                        'convertFormat' => true,
                         'filterWidgetOptions' => [
                             'type' => DatePicker::TYPE_RANGE,
                             'attribute2' => $attribute . '_to',
@@ -545,13 +561,14 @@ class Module extends \yii\base\Module
                     ];
                     break;
                 case 'boolean':
+                    $choices = ModelHelper::getBooleanChoices($model, $attribute);
                     $config = [
                         'class' => \kartik\grid\BooleanColumn::className(),
                         'attribute' => $attribute,
                         'trueLabel' => 'Yes',
                         'falseLabel' => 'No',
                         'filterWidgetOptions' => [
-                            'data' => [0 => 'No', 1 => 'Yes'],
+                            'data' => $choices,
                             'pluginOptions' => [
                                 'allowClear' => true,
                                 'placeholder' => 'Select...'
@@ -561,10 +578,11 @@ class Module extends \yii\base\Module
                     ];
                     break;
                 case 'enumerate':
+                    $choices = ModelHelper::getEnumChoices($model, $attribute);
                     $config = [
                         'attribute' => $attribute,
                         'filterWidgetOptions' => [
-                            'data' => ModelHelper::getEnumChoices($model, $attribute),
+                            'data' => $choices,
                             'pluginOptions' => [
                                 'allowClear' => true,
                                 'placeholder' => 'Select...'
@@ -575,7 +593,7 @@ class Module extends \yii\base\Module
                     break;
                 case 'relation':
                     $relation = ModelHelper::getRelation($model, $attribute);
-                    $relation_choices = ModelHelper::getSelectChoices(new $relation->modelClass);
+                    $choices = ModelHelper::getSelectChoices(new $relation->modelClass);
                     $config = [
                         'label' => ucfirst(
                             strpos($attribute, '.') !== false ?
@@ -590,9 +608,9 @@ class Module extends \yii\base\Module
                             return $model ? ModelHelper::getLabelRelationValue($model, $attribute) : null;
                         },
                         // @todo multiple relation not implemented
-                        'filter' => !$relation->multiple ? $relation_choices : false,
+                        'filter' => !$relation->multiple ? $choices : false,
                         'filterWidgetOptions' => [
-                            'data' => $relation_choices,
+                            'data' => $choices,
                             'pluginOptions' => [
                                 'allowClear' => true,
                                 'placeholder' => 'Select...'
@@ -600,26 +618,43 @@ class Module extends \yii\base\Module
                         ],
                         'filterType' => Select2::className()
                     ];
+                    break;
+            }
 
-                    if ($editable) {
-                        $config['class'] = EditableColumn::className();
+            if ($editable) {
+                switch ($type) {
+                    case 'date':
+                        $config['editableOptions'] = [
+                            'inputType' => Editable::INPUT_DATE,
+                        ];
+                        break;
+                    case 'datetime':
+                        $config['editableOptions'] = [
+                            'inputType' => Editable::INPUT_DATETIME,
+                        ];
+                        break;
+                    case 'boolean':
+                    case 'enumerate':
+                        $config['editableOptions'] = [
+                            'inputType' => Editable::INPUT_SELECT2,
+                            'options' => [
+                                'data' => $choices,
+                            ],
+                            'displayValueConfig' => $choices,
+                        ];
+                        break;
+                    case 'relation':
+                        $relation = ModelHelper::getRelation($model, $attribute);
                         $config['editableOptions'] = [
                             'inputType' => Editable::INPUT_SELECT2,
                             'size' => 'lg',
-
-                            'ajaxSettings'=>[
-                                'url'=> Url::to([
-                                    '/ycm/model/editable',
-                                    'name' => $this->getModelName($model)
-                                ]),
-                            ],
 
                             'options' => [
                                 'options' => [
                                     'multiple' => $relation->multiple,
                                 ],
-                                'data' => $relation_choices,
-                                'pluginOptions' => count($relation_choices) > 20 ?
+                                'data' => $choices,
+                                'pluginOptions' => count($choices) > 20 ?
                                     [
                                         'minimumInputLength' => 3,
                                         'ajax' => [
@@ -634,29 +669,29 @@ class Module extends \yii\base\Module
                                     ] :
                                     null,
                             ],
-                            'displayValueConfig' => !$relation->multiple ? $relation_choices : null,
+                            'displayValueConfig' => !$relation->multiple ? $choices : null,
                         ];
-                        $editable = false;
-                    }
+                        break;
+                    default:
+                        $config['editableOptions']['options'] = $config;
+                        break;
+                }
 
-                    break;
-            }
-
-            if ($editable) {
-                $config = [
-                    'attribute' => isset($config['label']) ? $config['label'] : $attribute,
-                    'class' => EditableColumn::className(),
-                    'editableOptions' => [
-                        'inputType' => $editableType,
-                        'ajaxSettings'=>[
-                            'url'=> Url::to([
-                                '/ycm/model/editable',
-                                'name' => $this->getModelName($model)
-                            ]),
-                        ],
-                        'options' => $config
-                    ]
-                ];
+                $config = ArrayHelper::merge(
+                    [
+                        'class' => EditableColumn::className(),
+                        'editableOptions' => [
+                            'inputType' => $editableType,
+                            'ajaxSettings'=>[
+                                'url'=> Url::to([
+                                    '/ycm/model/editable',
+                                    'name' => $this->getModelName($model)
+                                ]),
+                            ],
+                        ]
+                    ],
+                    $config
+                );
             }
 
             $options = ArrayHelper::merge(
