@@ -539,7 +539,6 @@ class Module extends \yii\base\Module
                         'attribute' => $attribute,
                         'format' => ['datetime', 'php:Y-m-d'],
                         'options' => ['style' => 'width:240px'],
-                        'convertFormat' => true,
                         'filterWidgetOptions' => [
                             'type' => DatePicker::TYPE_RANGE,
                             'attribute2' => $attribute . '_to',
@@ -552,7 +551,6 @@ class Module extends \yii\base\Module
                         'attribute' => $attribute,
                         'format' => ['datetime', 'php:Y-m-d H:i:s'],
                         'options' => ['style' => 'width:240px'],
-                        'convertFormat' => true,
                         'filterWidgetOptions' => [
                             'type' => DatePicker::TYPE_RANGE,
                             'attribute2' => $attribute . '_to',
