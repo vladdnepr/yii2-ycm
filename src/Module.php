@@ -563,8 +563,6 @@ class Module extends \yii\base\Module
                     $config = [
                         'class' => \kartik\grid\BooleanColumn::className(),
                         'attribute' => $attribute,
-                        'trueLabel' => 'Yes',
-                        'falseLabel' => 'No',
                         'filterWidgetOptions' => [
                             'data' => $choices,
                             'pluginOptions' => [
@@ -677,9 +675,14 @@ class Module extends \yii\base\Module
 
                 $config = ArrayHelper::merge(
                     [
-                        'class' => EditableColumn::className(),
                         'editableOptions' => [
                             'inputType' => $editableType,
+                        ]
+                    ],
+                    $config,
+                    [
+                        'class' => EditableColumn::className(),
+                        'editableOptions' => [
                             'ajaxSettings'=>[
                                 'url'=> Url::to([
                                     '/ycm/model/editable',
@@ -687,8 +690,7 @@ class Module extends \yii\base\Module
                                 ]),
                             ],
                         ]
-                    ],
-                    $config
+                    ]
                 );
             }
 
