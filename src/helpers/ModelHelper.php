@@ -73,18 +73,10 @@ class ModelHelper
 
     public static function getBooleanChoices(ActiveRecord $model, $attribute)
     {
-        $values = [];
-
-        if (($columnSchema = $model->getTableSchema()->getColumn($attribute))
-            && strpos($columnSchema->dbType, 'tinyint(1)') !== false
-        ) {
-            $values = [
-                0 => 'No',
-                1 => 'Yes'
-            ];
-        }
-
-        return $values;
+        return [
+            0 => 'No',
+            1 => 'Yes'
+        ];
     }
 
     /**
