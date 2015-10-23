@@ -72,7 +72,10 @@ class RelationsBehavior extends BaseBehavior
         }
 
         if (method_exists($owner, 'search')) {
-            array_map($map, $owner->search([]));
+            $search = $owner->search([]);
+            if (is_array($search)) {
+                array_map($map, $search);
+            }
         }
 
         parent::attach($owner);
