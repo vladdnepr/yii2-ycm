@@ -54,7 +54,8 @@ class ModelHelper
             $values[] = self::getLabelColumnValue($relation_model);
         }
 
-        return implode(', ', $values);
+        // Bugfix in editable. if empty - it pass array(0) to HtmlHelper and fail
+        return $values ? implode(', ', $values) : '(not set)';
     }
 
     public static function getEnumChoices(ActiveRecord $model, $attribute)
