@@ -45,7 +45,7 @@ class ModelController extends Controller
                         ],
                         'allow' => true,
                         'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
+                        'matchCallback' => function () {
                             return in_array(Yii::$app->user->identity->username, $this->module->admins);
                         }
                     ],
@@ -194,13 +194,13 @@ class ModelController extends Controller
             'class' => 'kartik\grid\ActionColumn',
             'template' => '{update} {delete}',
             'buttons' => [
-                'update' => function ($url, $model, $key) {
+                'update' => function ($url) {
                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                         'title' => Yii::t('ycm', 'Update'),
                         'data-pjax' => '0',
                     ]);
                 },
-                'delete' => function ($url, $model, $key) {
+                'delete' => function ($url, $model) {
                     /** @var $module \vladdnepr\ycm\Module */
                     $module = $this->module;
                     if ($module->getHideDelete($model) === false) {
@@ -211,10 +211,13 @@ class ModelController extends Controller
                             'data-pjax' => '0',
                         ]);
                     }
+                    return null;
                 },
             ],
-            'urlCreator' => function ($action, $model, $key, $index) {
-                $name = Yii::$app->getRequest()->getQueryParam('name');
+            'urlCreator' => function ($action, $model, $key) {
+                /** @var $module \vladdnepr\ycm\Module */
+                $module = $this->module;
+                $name = $module->getModelName($model);
                 return Url::to([$action, 'name' => $name, 'pk' => $key]);
             }
         ]);

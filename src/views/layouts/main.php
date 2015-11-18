@@ -12,6 +12,7 @@ use yii\widgets\Breadcrumbs;
 /** @var $module \vladdnepr\ycm\Module */
 $module = Yii::$app->controller->module;
 
+/** @var $assetBundle \yii\web\AssetBundle */
 $assetBundle = $module->assetBundle;
 $assetBundle::register($this);
 
