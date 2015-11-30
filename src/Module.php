@@ -655,7 +655,8 @@ class Module extends \yii\base\Module
                                         'minimumInputLength' => 3,
                                         'ajax' => [
                                             'url' => Url::to([
-                                                '/ycm/model/choices', $this->getModelName(new $relation->modelClass)
+                                                '/ycm/model/choices',
+                                                'name' => $this->getModelName(new $relation->modelClass)
                                             ]),
                                             'dataType' => 'json',
                                             'processResults' => new JsExpression(

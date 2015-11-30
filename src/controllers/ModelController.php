@@ -462,7 +462,7 @@ class ModelController extends Controller
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         /* @var ActiveRecord $model */
-        $model = $this->module->ycm->loadModel($name);
+        $model = $this->module->loadModel($name);
 
         if (!is_null($q)) {
             $out['results'] = ModelHelper::findChoicesByLabel($model, $q);
