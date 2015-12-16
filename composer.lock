@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "52c653d62e633a2ea109704446b59a76",
-    "content-hash": "a9b05b8c30af023da4e942d0611274f3",
+    "hash": "2563b2980bb1afc89bae8eb188674cf9",
+    "content-hash": "b8a37a5bc432f5e1b3ab0ef05f13816a",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -741,7 +741,7 @@
         },
         {
             "name": "kartik-v/yii2-grid",
-            "version": "dev-master",
+            "version": "v3.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vladdnepr/yii2-grid.git",
@@ -3798,9 +3798,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kartik-v/yii2-grid": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -25,7 +25,7 @@
         "yiisoft/yii2-bootstrap": "*",
         "janisto/yii2-timepicker": "*",
         "vova07/yii2-imperavi-widget": "*",
-        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-grid": "~3.0",
         "kartik-v/yii2-krajee-base": "~1.7",
         "kartik-v/yii2-mpdf": "~1.0",
         "kartik-v/yii2-editable": "^1.7",
