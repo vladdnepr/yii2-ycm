@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "88192642338ede72e7ae24f270b81d12",
-    "content-hash": "7c9d7bb5b54faab33baab5703dec27dd",
+    "hash": "52c653d62e633a2ea109704446b59a76",
+    "content-hash": "a9b05b8c30af023da4e942d0611274f3",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -741,16 +741,16 @@
         },
         {
             "name": "kartik-v/yii2-grid",
-            "version": "v3.0.7",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "913fde8fbe41bf998d53a88d0443e25e1e696194"
+                "url": "https://github.com/vladdnepr/yii2-grid.git",
+                "reference": "ac8029dc89931659bc1a74a547ebf826ac7b5688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/913fde8fbe41bf998d53a88d0443e25e1e696194",
-                "reference": "913fde8fbe41bf998d53a88d0443e25e1e696194",
+                "url": "https://api.github.com/repos/vladdnepr/yii2-grid/zipball/ac8029dc89931659bc1a74a547ebf826ac7b5688",
+                "reference": "ac8029dc89931659bc1a74a547ebf826ac7b5688",
                 "shasum": ""
             },
             "require": {
@@ -762,7 +762,6 @@
                     "kartik\\grid\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -781,7 +780,10 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-09-12 19:41:22"
+            "support": {
+                "source": "https://github.com/vladdnepr/yii2-grid/tree/master"
+            },
+            "time": "2015-12-16 14:43:31"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -3796,7 +3798,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kartik-v/yii2-grid": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
