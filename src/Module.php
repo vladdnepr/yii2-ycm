@@ -612,7 +612,7 @@ class Module extends \yii\base\Module
                             'data' => $choices,
                             'pluginOptions' => [
                                 'allowClear' => true,
-                                'placeholder' => 'Select...'
+                                'placeholder' => '...'
                             ],
                         ],
                         'filterType' => Select2::className()
