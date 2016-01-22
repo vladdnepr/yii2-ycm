@@ -44,10 +44,7 @@ class RelationsBehavior extends BaseBehavior
             if (is_array($config)) {
                 if (isset($config[0])) {
                     $this->rules[] = [[$config[0]], 'safe', 'on' => 'ycm-search'];
-
-                    if (isset($config['editable']) && $config['editable']) {
-                        $this->rules[] = [[$config[0]], 'safe', 'on' => 'default'];
-                    }
+                    $this->rules[] = [[$config[0]], 'safe', 'on' => 'default'];
                 }
 
                 if (isset($config[1])

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2563b2980bb1afc89bae8eb188674cf9",
-    "content-hash": "b8a37a5bc432f5e1b3ab0ef05f13816a",
+    "hash": "88192642338ede72e7ae24f270b81d12",
+    "content-hash": "7c9d7bb5b54faab33baab5703dec27dd",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -744,13 +744,13 @@
             "version": "v3.0.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/vladdnepr/yii2-grid.git",
-                "reference": "ac8029dc89931659bc1a74a547ebf826ac7b5688"
+                "url": "https://github.com/kartik-v/yii2-grid.git",
+                "reference": "8783693da04c51acfa1040b8843836993ad2f195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vladdnepr/yii2-grid/zipball/ac8029dc89931659bc1a74a547ebf826ac7b5688",
-                "reference": "ac8029dc89931659bc1a74a547ebf826ac7b5688",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/8783693da04c51acfa1040b8843836993ad2f195",
+                "reference": "8783693da04c51acfa1040b8843836993ad2f195",
                 "shasum": ""
             },
             "require": {
@@ -762,6 +762,7 @@
                     "kartik\\grid\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -780,10 +781,7 @@
                 "widget",
                 "yii2"
             ],
-            "support": {
-                "source": "https://github.com/vladdnepr/yii2-grid/tree/master"
-            },
-            "time": "2015-12-16 14:43:31"
+            "time": "2016-01-10 12:22:13"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
