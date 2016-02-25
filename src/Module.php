@@ -53,6 +53,8 @@ use yii\web\NotFoundHttpException;
  */
 class Module extends \yii\base\Module
 {
+    const MODEL_MULTILANG_PROPERTY_NAME = 'attributes_multilang';
+
     /** @inheritdoc */
     public $controllerNamespace = 'vladdnepr\ycm\controllers';
 
@@ -717,6 +719,10 @@ class Module extends \yii\base\Module
             'relationsseter',
             \vladdnepr\ycm\behaviors\RelationsBehavior::className()
         );
+        $model->attachBehavior(
+            'multilang',
+            \vladdnepr\ycm\behaviors\MultilangBehavior::className()
+        );
         return $model;
     }
 
@@ -780,6 +786,27 @@ class Module extends \yii\base\Module
                 $field->$type($options);
             }
         }
+
+        /**
+         * Multilanguage DB fields support
+         */
+        if ($attributes_multilang = ModelHelper::getMultiLangAttributes($model, $attribute)) {
+            $field->addon =['prepend' => ['content' => strtoupper(substr(\Yii::$app->sourceLanguage, 0, 2))]];
+            $field .= implode('', array_map(
+                function ($attribute_multilang) use ($form, $model, $attribute, $options, $type) {
+                    $options['label'] = false;
+                    $field = $this->createField($form, $model, $attribute_multilang, $options, $type);
+                    $field->addon = [
+                        'prepend' => [
+                            'content'=> strtoupper(trim(str_replace($attribute, '', $attribute_multilang), '-_'))
+                        ]
+                    ];
+                    return $field;
+                },
+                $attributes_multilang
+            ));
+        }
+
         return $field;
     }
 

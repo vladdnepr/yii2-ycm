@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use vladdnepr\ycm\widgets\Alert;
 
 /* @var $this \yii\web\View */

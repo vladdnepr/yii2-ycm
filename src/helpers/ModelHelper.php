@@ -2,6 +2,7 @@
 
 namespace vladdnepr\ycm\helpers;
 
+use vladdnepr\ycm\Module;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -25,6 +26,26 @@ class ModelHelper
         }
 
         return $relation;
+    }
+
+    public static function getMultiLangAttributes(ActiveRecord $model, $attribute)
+    {
+        $attributes = null;
+
+        if (property_exists($model, Module::MODEL_MULTILANG_PROPERTY_NAME)
+            && in_array($attribute, $model->{Module::MODEL_MULTILANG_PROPERTY_NAME})
+        ) {
+            $attributes = [];
+            foreach ($model->attributes() as $model_attribute) {
+                if (strpos($model_attribute, $attribute) === 0 // If start with original name
+                    && strlen($model_attribute) - strlen($attribute) == 3 // and contain delimiter and 2-char lang code
+                ) {
+                    $attributes[] = $model_attribute;
+                }
+            }
+        }
+
+        return $attributes;
     }
 
     /**
