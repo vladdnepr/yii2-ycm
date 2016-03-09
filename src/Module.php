@@ -5,6 +5,7 @@ namespace vladdnepr\ycm;
 use kartik\date\DatePicker;
 use kartik\editable\Editable;
 use kartik\grid\EditableColumn;
+use kartik\touchspin\TouchSpin;
 use kartik\widgets\Select2;
 use vladdnepr\ycm\helpers\ModelHelper;
 use Yii;
@@ -413,6 +414,17 @@ class Module extends \yii\base\Module
                 echo $this->createField($form, $model, $attribute, $options, 'textInput');
                 break;
 
+            case 'integer':
+                $options = [
+                    'widgetClass' => TouchSpin::className(),
+                    'pluginOptions' => [
+                        'min' => -PHP_INT_MAX,
+                        'max' => PHP_INT_MAX,
+                    ],
+                ];
+                echo $this->createField($form, $model, $attribute, $options, 'widget');
+                break;
+
             case 'hidden':
                 $options = [
                     'maxlength' => $tableSchema->columns[$attribute]->size,
@@ -740,7 +752,12 @@ class Module extends \yii\base\Module
     protected function createField($form, $model, $attribute, $options, $type = 'textInput')
     {
         $options = $this->getAttributeOptions($attribute, $options);
-        $field = $form->field($model, $attribute);
+        $fieldOptions = [];
+        if (isset($options['fieldOptions'])) {
+            $fieldOptions = $options['fieldOptions'];
+            unset($options['fieldOptions']);
+        }
+        $field = $form->field($model, $attribute, $fieldOptions);
         if (isset($options['hint'])) {
             $hintOptions = [];
             if (isset($options['hintOptions'])) {
@@ -781,6 +798,11 @@ class Module extends \yii\base\Module
                 } else {
                     throw new InvalidConfigException('Widget class missing from configuration.');
                 }
+
+                if (property_exists($class, 'form')) {
+                    $options['form'] = $form;
+                }
+
                 $field->widget($class, $options);
             } else {
                 $field->$type($options);
