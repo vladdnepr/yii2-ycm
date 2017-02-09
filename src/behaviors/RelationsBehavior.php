@@ -160,6 +160,13 @@ class RelationsBehavior extends BaseBehavior
     {
         // Save multiple relations
         foreach ($this->relations_multiple as $relation_name => $relation_data) {
+            foreach ($this->owner->$relation_name as $relation_model) {
+                /* @var ActiveRecord $relation_model */
+                $relation_model_pk = $relation_model->getPrimaryKey();
+                if (!in_array($relation_model_pk, $relation_data)) {
+                    $this->unbindModelById($relation_name, $relation_model_pk);
+                }
+            }
             foreach ($relation_data as $id) {
                 $this->bindModelById($relation_name, $id);
             }
@@ -173,5 +180,14 @@ class RelationsBehavior extends BaseBehavior
         $relation_class = $this->owner->getRelation($relation_name, false)->modelClass;
         $model = $relation_class::findOne($id);
         $this->owner->link($relation_name, $model);
+    }
+
+    protected function unbindModelById($relation_name, $id)
+    {
+        /** @var $model \yii\db\ActiveRecord */
+        /** @var $relation_class \yii\db\ActiveRecord */
+        $relation_class = $this->owner->getRelation($relation_name, false)->modelClass;
+        $model = $relation_class::findOne($id);
+        $this->owner->unlink($relation_name, $model);
     }
 }

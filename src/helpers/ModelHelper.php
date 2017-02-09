@@ -56,11 +56,18 @@ class ModelHelper
     public static function getSelectChoices(ActiveRecord $model)
     {
         $title_column_name = self::getLabelColumnName($model);
-        return ArrayHelper::map(
-            $model->find()->orderBy($title_column_name . ' ASC')->all(),
-            self::getPkColumnName($model),
-            $title_column_name
-        );
+
+        if (method_exists($model, 'selectChoices')) {
+            $choices = $model->selectChoices();
+        } else {
+            $choices = ArrayHelper::map(
+                $model->find()->orderBy($title_column_name . ' ASC')->all(),
+                self::getPkColumnName($model),
+                $title_column_name
+            );
+        }
+
+        return $choices;
     }
 
     public static function getLabelRelationValue(ActiveRecord $model, $relation)

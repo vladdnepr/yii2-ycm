@@ -86,7 +86,12 @@ class SearchQuery
     public function __construct(ActiveRecord $model)
     {
         $this->model = $model;
-        $this->query = $model->find();
+
+        if (method_exists($model, 'searchQuery')) {
+            $this->query = $model->searchQuery();
+        } else {
+            $this->query = $model->find();
+        }
     }
 
     public function getQuery()
