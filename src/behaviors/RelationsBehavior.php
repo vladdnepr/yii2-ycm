@@ -152,7 +152,8 @@ class RelationsBehavior extends BaseBehavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_AFTER_UPDATE => [$this->owner, 'afterUpdate']
+            ActiveRecord::EVENT_AFTER_UPDATE => [$this->owner, 'afterUpdate'],
+            ActiveRecord::EVENT_AFTER_INSERT => [$this->owner, 'afterUpdate'],
         ];
     }
 
