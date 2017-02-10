@@ -49,25 +49,53 @@ class ModelHelper
     }
 
     /**
-     * Get Choices
-     * @param ActiveRecord $model
-     * @return array Key - primary key value, value - label column value
+     * Get an array of attribute choice values.
+     * The variable or method name needs ​​to be: attributeChoices.
+     *
+     * @param \yii\db\ActiveRecord $model Model
+     * @param string $attribute Model attribute
+     * @return array
      */
-    public static function getSelectChoices(ActiveRecord $model)
+    public static function getAttributeChoices($model, $attribute)
     {
-        $title_column_name = self::getLabelColumnName($model);
+        $data = [];
+        $choicesName = (string) $attribute . 'Choices';
+        if (method_exists($model, $choicesName) && is_array($model->$choicesName())) {
+            $data = $model->$choicesName();
+        } elseif (isset($model->$choicesName) && is_array($model->$choicesName)) {
+            $data = $model->$choicesName;
+        }
+        return $data;
+    }
 
-        if (method_exists($model, 'selectChoices')) {
-            $choices = $model->selectChoices();
-        } else {
-            $choices = ArrayHelper::map(
-                $model->find()->orderBy($title_column_name . ' ASC')->all(),
-                self::getPkColumnName($model),
+    /**
+     * Get an array of relation choice values.
+     * The variable or method name needs ​​to be: attributeChoices.
+     *
+     * @param \yii\db\ActiveRecord $model Model
+     * @param string $attribute Model attribute
+     * @return array
+     */
+    public static function getRelationChoices($model, $attribute)
+    {
+        $data = self::getAttributeChoices($model, $attribute);
+
+        if (!$data) {
+            /* @var ActiveRecord $relation_model */
+            $relation = $model->getRelation($attribute);
+            $relation_model = new $relation->modelClass;
+
+            $title_column_name = self::getLabelColumnName($relation_model);
+
+            $data = ArrayHelper::map(
+                $relation_model->find()->orderBy($title_column_name . ' ASC')->all(),
+                self::getPkColumnName($relation_model),
                 $title_column_name
             );
+
         }
 
-        return $choices;
+        return $data;
     }
 
     public static function getLabelRelationValue(ActiveRecord $model, $relation)

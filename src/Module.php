@@ -495,7 +495,7 @@ class Module extends \yii\base\Module
 
                 $options = [
                     'widgetClass' => Select2::className(),
-                    'data' => ModelHelper::getSelectChoices(new $relation->modelClass),
+                    'data' => ModelHelper::getRelationChoices($model, $attribute),
                     'hideSearch' => false,
                     'options' => [
                         'multiple' => $relation->multiple,
@@ -606,7 +606,7 @@ class Module extends \yii\base\Module
                     break;
                 case 'relation':
                     $relation = ModelHelper::getRelation($model, $attribute);
-                    $choices = ModelHelper::getSelectChoices(new $relation->modelClass);
+                    $choices = ModelHelper::getRelationChoices($model, $attribute);
                     $config = [
                         'label' => ucfirst(
                             strpos($attribute, '.') !== false ?
@@ -782,13 +782,13 @@ class Module extends \yii\base\Module
             $field = $field->input($input, $options);
         } else {
             if ($type == 'dropDownList' || $type == 'listBox' || $type == 'checkboxList' || $type == 'radioList') {
-                $items = $this->getAttributeChoices($model, $attribute);
+                $items = ModelHelper::getAttributeChoices($model, $attribute);
                 $field->$type($items, $options);
             } elseif ($type == 'select') {
                 if (isset($options['data'])) {
-                    $options['data'] = $options['data'] + $this->getAttributeChoices($model, $attribute);
+                    $options['data'] = $options['data'] + ModelHelper::getAttributeChoices($model, $attribute);
                 } else {
-                    $options['data'] = $this->getAttributeChoices($model, $attribute);
+                    $options['data'] = ModelHelper::getAttributeChoices($model, $attribute);
                 }
                 $field->widget(Select2::className(), $options);
             } elseif ($type == 'widget') {
@@ -910,26 +910,6 @@ class Module extends \yii\base\Module
         $this->attributeWidgets = (object) $data;
 
         return $this->getAttributeWidget($model, $attribute);
-    }
-
-    /**
-     * Get an array of attribute choice values.
-     * The variable or method name needs ​​to be: attributeChoices.
-     *
-     * @param \yii\db\ActiveRecord $model Model
-     * @param string $attribute Model attribute
-     * @return array
-     */
-    protected function getAttributeChoices($model, $attribute)
-    {
-        $data = [];
-        $choicesName = (string) $attribute . 'Choices';
-        if (method_exists($model, $choicesName) && is_array($model->$choicesName())) {
-            $data = $model->$choicesName();
-        } elseif (isset($model->$choicesName) && is_array($model->$choicesName)) {
-            $data = $model->$choicesName;
-        }
-        return $data;
     }
 
     /**
