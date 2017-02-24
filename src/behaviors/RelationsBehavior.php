@@ -104,7 +104,7 @@ class RelationsBehavior extends BaseBehavior
         if ($this->isNameOfRelation($name)) {
             if ($this->relations_info[$name]->multiple) {
                 if (!is_array($value)) {
-                    throw new \InvalidArgumentException('For multiple relation pass array of ids');
+                    $value = [];
                 }
                 $this->relations_multiple[$name] = $value;
             } elseif ($value) {
