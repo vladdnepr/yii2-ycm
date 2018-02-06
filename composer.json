@@ -4,7 +4,7 @@
     "keywords": ["yii2", "yii2-ycm", "admin", "administration", "module", "extension"],
     "homepage": "https://github.com/vladdnepr/yii2-ycm",
     "type": "yii2-extension",
-    "license": "public domain",
+    "license": "MIT",
     "authors": [
         {
           "name": "Vladislav Lyshenko",
